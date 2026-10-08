@@ -244,14 +244,14 @@ async function deriveExtensionIdFromManifest(manifestPath) {
 
 function resolveAppSupportDir(platformFamily) {
   if (platformFamily === "darwin") {
-    return resolve(homedir(), "Library", "Application Support", "CodexSidepanel");
+    return resolve(homedir(), "Library", "Application Support", "ChromexSideChat");
   }
 
   if (platformFamily === "win32") {
-    return resolve(readEnvValue(process.env, "LOCALAPPDATA") || resolve(homedir(), "AppData", "Local"), "CodexSidepanel");
+    return resolve(readEnvValue(process.env, "LOCALAPPDATA") || resolve(homedir(), "AppData", "Local"), "ChromexSideChat");
   }
 
-  return resolve(readEnvValue(process.env, "XDG_CONFIG_HOME") || resolve(homedir(), ".config"), "codex-sidepanel");
+  return resolve(readEnvValue(process.env, "XDG_CONFIG_HOME") || resolve(homedir(), ".config"), "chromex-side-chat");
 }
 
 function resolveInstallTargets({ platformFamily, homeDir, appSupportDir, selectedBrowsers, profileDir }) {
