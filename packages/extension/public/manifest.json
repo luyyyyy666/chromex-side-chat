@@ -3,7 +3,7 @@
   "name": "__MSG_extensionName__",
   "version": "0.1.7",
   "minimum_chrome_version": "116",
-  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAuP+A4d/pFvVoYH/4yByEMq1JknmBMcsBo5hbyjFDRthp9GrAWTnksc0X/dP5kftZ45O+IlfP6rfg5w7ktNDt7tuJ0TpslnQEUvzC9D0CkEWzj6OmuWgY7nCtmnuHHItp1xJR9RsCDMNg9qFf54EiCf6eyTDrkJnn1yeIx/rIZRcbqnFjBLrVsuSz18L21/b+zQ8o+xzPWWhOYGVnuxuQvL57/MiDfSJ5zI0xgnYgMP/OXhdRTKmJeu/0pdEcrk2y1WgAE2LfI0jKjF6VIjKmDHabJRlP3/UZy6siRFHPZs2Q5Eh+Wxb0MtfiXN2r64R9p7MjGOkaw71GH+itEiAxuwIDAQAB",
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAuuUXtl+rLFyseWrln58NN7jy5WIdfxB7EYXvKkK8IVGpcum0OlDCIOIhKGu2cV3e/ffhAL+XrFXc6f21IrdkPwR0Dn4azv93dCAPoaSpyiUD+UkrMKb18mEg/UkeCTUK1YJ8Y2oNogC7QsYoTi+fPW587GlopaH5HuHet0n6xQLWMLnzSUoSFs6/kJWUIYHPaaQIGi5veuO/jRkplkb77aeZF4dtwv8nMUAayJLOyMAFu0KvxJzkBTaudbMl1XKC3C1pyuiyS0Olp8OTsljmS4UeeEFZc8cyCza41euW4aEmb9cLDbNUfvn3XfzAmwyB7uwWlYZtjJ26IS9wF6c0vQIDAQAB",
   "default_locale": "en",
   "description": "__MSG_extensionDescription__",
   "icons": {
@@ -35,8 +35,14 @@
   },
   "content_scripts": [
     {
-      "matches": ["http://*/*", "https://*/*", "file:///*"],
-      "js": ["content.js"],
+      "matches": [
+        "http://*/*",
+        "https://*/*",
+        "file:///*"
+      ],
+      "js": [
+        "content.js"
+      ],
       "run_at": "document_idle",
       "all_frames": false
     }
@@ -56,8 +62,12 @@
   },
   "web_accessible_resources": [
     {
-      "resources": ["icons/codex-32.png"],
-      "matches": ["<all_urls>"]
+      "resources": [
+        "icons/codex-32.png"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
     }
   ],
   "commands": {

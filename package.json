@@ -1,5 +1,5 @@
 {
-  "name": "chromex",
+  "name": "chromex-side-chat",
   "version": "0.1.8",
   "private": true,
   "license": "MIT",
@@ -26,7 +26,8 @@
     "store:assets": "node scripts/generate-webstore-assets.mjs",
     "release:audit": "node scripts/release-audit.mjs",
     "release:audit:history": "node scripts/audit-git-history.mjs",
-    "audit": "npm audit --audit-level=high --omit=dev"
+    "audit": "npm audit --audit-level=high --omit=dev",
+    "smoke:side-chat": "node scripts/smoke-side-chat.mjs"
   },
   "devDependencies": {
     "@types/chrome": "^0.1.30",

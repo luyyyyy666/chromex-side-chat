@@ -145,6 +145,7 @@ export interface RuntimeConfigSnapshot {
 }
 
 export interface PromptRequestPayload {
+  sideChatOnly?: boolean;
   conversationId?: string;
   message: string;
   contextHint?: string;

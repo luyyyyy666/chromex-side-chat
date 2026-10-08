@@ -300,11 +300,11 @@ describe("conference mode", () => {
     expect(sendPromptBody).toContain("const transcriptQuestionContextActiveAtSubmit = isTranscriptQuestionContextActive()");
     expect(sendPromptBody).toContain("const transcriptQuestionContextActive = transcriptQuestionContextActiveAtSubmit");
     expect(sendPromptBody).toContain("resolveActiveTranscriptViewForPrompt()");
-    expect(sendPromptBody).toContain("const nextAttachments = Array.from(state.attachments)");
-    expect(sendPromptBody).toContain("selectedTextContext: createPromptSelectedTextContextPayload()");
+    expect(sendPromptBody).toContain("const nextAttachments: PromptRequestPayload[\"attachments\"] = []");
+    expect(sendPromptBody).toContain("selectedTextContext: undefined");
     expect(sendPromptBody).toContain("fileAttachments: nextFileAttachments");
     expect(sendPromptBody).toContain("selectedTabIds: state.selectedTabIds");
-    expect(sendPromptBody).toContain("suppressPageContext: transcriptQuestionContextActive || isCurrentTabContextDismissed()");
+    expect(sendPromptBody).toContain("suppressPageContext: true");
     expect(mentionBody).not.toContain("isConferenceModeQuestionContextActive()");
     expect(attachmentActionBody).not.toContain("getConferenceModeContextOnlyMessage()");
     expect(contextActiveBody).toContain("state.conferenceMode.viewActive");

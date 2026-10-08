@@ -36,51 +36,16 @@ describe("open-source repository hygiene", () => {
     expect(gitignore).toContain("coverage/");
   });
 
-  test("keeps public readmes user-facing without exposing store packaging commands", () => {
-    const publicReleaseScript = readRepoFile("scripts/package-public-release.mjs");
+  test("documents the Side Chat source installation and preserves upstream attribution", () => {
     const readme = readRepoFile("README.md");
-    const koreanReadme = readRepoFile("readmes/README.ko.md");
-    const japaneseReadme = readRepoFile("readmes/README.ja.md");
-    const chineseReadme = readRepoFile("readmes/README.zh-CN.md");
-    const publicReadmes = [readme, koreanReadme, japaneseReadme, chineseReadme];
-
-    expect(publicReleaseScript).toContain("/^docs\\//u");
-    expect(readme).toContain("./readmes/README.ko.md");
-    expect(readme).toContain("./readmes/README.ja.md");
-    expect(readme).toContain("./readmes/README.zh-CN.md");
-    for (const publicReadme of publicReadmes) {
-      expect(publicReadme).toContain("assets/chromex-hero.png");
-      expect(publicReadme).toContain("releases/latest/download/chromex-public-source.zip");
-      expect(publicReadme).toContain("chromex-local-bridge.zip");
-      expect(publicReadme).toContain("ENOENT Could not read package.json");
-      expect(publicReadme).toContain("README.ja.md");
-      expect(publicReadme).toContain("README.zh-CN.md");
-      expect(publicReadme.trim().endsWith("</a>")).toBe(true);
-      expect(publicReadme).toContain("install-native-host.mjs <extension-id> --browser=chrome");
-      expect(publicReadme).toContain("menmlhahmendmkiicbjihgjhppkgaeom");
-      expect(publicReadme).toContain("npm install -g @openai/codex");
-      expect(publicReadme).toContain("codex --version");
-      expect(publicReadme).toContain("%APPDATA%\\npm\\codex.cmd");
-      expect(publicReadme).not.toContain("chromex-unpacked-extension.zip");
-      expect(publicReadme).not.toContain("Chrome Web Store Package");
-      expect(publicReadme).not.toContain("npm run package:webstore");
-      expect(publicReadme).not.toContain("npm run package:public");
-      expect(publicReadme).not.toContain("output/chrome-web-store");
-    }
-    expect(publicReleaseScript).not.toContain("chromex-unpacked-extension");
-    expect(publicReleaseScript).not.toContain("requireManifestKey: true");
-    expect(publicReleaseScript).not.toContain("delete manifest.key");
-    expect(existsSync(resolve(repoRoot, "assets/chromex-hero.png"))).toBe(true);
-    expect(readme).not.toContain(["What", "Is", "Not", "Published"].join(" "));
-    expect(koreanReadme).not.toContain(["공개하지", "않는", "항목"].join(" "));
-    expect(japaneseReadme).not.toContain(["公開", "しない", "項目"].join(""));
-    expect(chineseReadme).not.toContain(["不", "发布", "的", "项目"].join(""));
-    expect(readme).not.toContain(["intentionally", "excludes"].join(" "));
-    expect(koreanReadme).not.toContain(["의도적으로", "제외"].join(" "));
-    for (const publicReadme of publicReadmes) {
-      expect(publicReadme).not.toContain("docs/");
-      expect(publicReadme).not.toContain(["CONTRIBUTING", "md"].join("."));
-    }
+    expect(readme).toContain("GENEXIS-AI/chromex");
+    expect(readme).toContain("npm ci");
+    expect(readme).toContain("npm run build");
+    expect(readme).toContain("packages/extension/dist");
+    expect(readme).toContain("com.chromex.sidechat.bridge");
+    expect(readme).toContain("--browser=edge");
+    expect(readme).not.toContain("releases/latest/download/chromex-public-source.zip");
+    expect(readRepoFile("readmes/UPSTREAM.md")).toContain("Chromex");
   });
 
   test("publishes only the public privacy policy through GitHub Pages", () => {

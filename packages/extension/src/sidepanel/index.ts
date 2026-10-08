@@ -1,3 +1,5 @@
+import { mountSideChat } from "../side-chat/panel.js";
+import { createSnapshot, snapshotPrompt } from "../side-chat/context.js";
 import {
   normalizeCodexRealtimeVoice,
   type ActionCard,
@@ -1185,6 +1187,8 @@ const persistConversationBatch = createDebouncedTask(
 );
 let conversationPersistFlushQueue = Promise.resolve();
 
+const sideChat = mountSideChat(() => state.currentConversationId, startNewChat);
+
 installSmokeHarness();
 installGlobalFloatingSurfaceDismissal();
 renderSync();
@@ -1224,7 +1228,7 @@ chrome.runtime.onMessage.addListener((message, sender) => {
   }
 
   if (message.type === "ui.page-selection.changed") {
-    applyPageSelectionContextUpdate(message, sender);
+    // Side Chat snapshots update only on an explicit user action.
     return;
   }
 
@@ -2056,6 +2060,8 @@ async function takePendingContextMenuSelection(): Promise<void> {
   if (!selection) {
     return;
   }
+  await startNewChat();
+  await sideChat.set(createSnapshot(selection.url, selection.title, `Selected text:\n${selection.text}\n\nNearby context:\n${selection.contextText ?? ""}`));
   applyPendingSelectedPageTextContext(selection);
 }
 
@@ -2107,6 +2113,13 @@ async function takePendingContextMenuAction(): Promise<void> {
   }).catch(() => null);
   const action = normalizePendingContextMenuAction(result?.action);
   if (!action) {
+    return;
+  }
+  if (action === "summarize-page") {
+    const snapshot = await sideChat.capture();
+    await startNewChat();
+    await sideChat.set(snapshot);
+    focusComposerAtEnd();
     return;
   }
   await handleActionCard(action);
@@ -3194,6 +3207,7 @@ function flushDeferredComposerCompositionRender(): void {
 }
 
 function renderNow(): void {
+  sideChat.sync();
   if (composerCompositionInProgress) {
     renderDeferredDuringComposerComposition = true;
     return;
@@ -14647,28 +14661,6 @@ async function sendPrompt(
     return;
   }
 
-  if (state.settings.allowBrowserActions) {
-    const command = parseVoiceNavigationCommand(message);
-    if (command) {
-      const response = await sendRuntimeMessageWithConfirmation<{ matched?: boolean; cancelled?: boolean }>({
-        type: "page.navigate",
-        command,
-      });
-      if (isCancelledResult(response)) {
-        return;
-      }
-      state.composerDraft = "";
-      clearTransientComposerCommandPill();
-      state.liveCaption = message;
-      if (composer) {
-        composer.value = "";
-      }
-      scheduleConversationPersist();
-      render();
-      return;
-    }
-  }
-
   if (!(await ensureChatgptAuthForCodexPrompt())) {
     return;
   }
@@ -14713,7 +14705,8 @@ async function sendPrompt(
     });
     sanitizeUnavailableCurrentPageState();
     const transcriptQuestionContextActive = transcriptQuestionContextActiveAtSubmit;
-    const nextAttachments = Array.from(state.attachments);
+    const sideChatSnapshot = await sideChat.get(conversationIdAtStart);
+    const nextAttachments: PromptRequestPayload["attachments"] = [];
     const contextHint = buildConversationContextHint();
     const submittedFileAttachmentState = createSubmittedComposerFileAttachmentState(
       state.fileAttachments,
@@ -14773,7 +14766,7 @@ async function sendPrompt(
     const result = await sendRuntimeMessageWithConfirmation<PromptSendResult>({
       type: sendAsTurnSteer ? "turn.steer" : "prompt.send",
       payload: {
-        message: runtimeMessage,
+        message: [snapshotPrompt(sideChatSnapshot), runtimeMessage].filter(Boolean).join("\n\nUser question:\n"),
         conversationId: conversationIdAtStart,
         contextHint,
         conversationContext: contextHint,
@@ -14784,13 +14777,14 @@ async function sendPrompt(
         serviceTier: state.selectedServiceTier || undefined,
         readStrategyOverride: state.currentReadStrategy,
         attachments: nextAttachments,
-        selectedTextContext: createPromptSelectedTextContextPayload(),
+        selectedTextContext: undefined,
         fileAttachments: nextFileAttachments,
         structuredInputs: submittedPromptStructuredInputs,
         selectedTabIds: state.selectedTabIds,
         historyQuery: state.historyQuery,
         resetThread: options.resetThread,
-        suppressPageContext: transcriptQuestionContextActive || isCurrentTabContextDismissed(),
+        suppressPageContext: true,
+        sideChatOnly: true,
         conversationMessageCount: state.messages.length,
         ...(state.settings.planModeEnabled && !sendAsTurnSteer ? { planMode: true } : {}),
         ...(goalCommand && !sendAsTurnSteer ? { useGoal: true, goalObjective: goalCommand.objective } : {}),

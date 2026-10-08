@@ -86,14 +86,14 @@ const MESSAGE_DESCRIPTIONS = {
 };
 
 const DEFAULT_MESSAGES = {
-  extensionName: "Chromex",
+  extensionName: "Chromex Side Chat",
   extensionDescription: "A Codex-powered browser assistant for page context, tabs, voice, and image editing.",
   actionOpenSidePanel: "Open Chromex",
   commandOpenSidePanel: "Open Chromex",
   commandOpenPopup: "Open Chromex popup",
   commandStartDictation: "Start or stop dictation",
-  contextAskPage: "Ask Chromex about this page",
-  contextAskSelection: "Ask AI about selection",
+  contextAskPage: "New Side Chat about this page",
+  contextAskSelection: "New Side Chat about selection",
   contextEditImage: "Edit this image with Chromex",
   contextSummarizeYoutube: "Summarize this YouTube video",
 };
@@ -575,7 +575,7 @@ function messages(
   contextAskSelection = DEFAULT_MESSAGES.contextAskSelection,
 ) {
   return {
-    extensionName: "Chromex",
+    extensionName: "Chromex Side Chat",
     extensionDescription,
     actionOpenSidePanel,
     commandOpenSidePanel: actionOpenSidePanel,

@@ -5,7 +5,7 @@ import { homedir, platform } from "node:os";
 import { basename, dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
-const NATIVE_HOST_NAME = "com.codex.sidepanel.bridge";
+const NATIVE_HOST_NAME = "com.chromex.sidechat.bridge";
 const SUPPORTED_BROWSERS = ["chrome", "chrome-beta", "chrome-dev", "chrome-canary", "chrome-for-testing", "chromium"];
 const CHROME_WEB_STORE_EXTENSION_ID = "odlalmnpmmakfigepbaabimjcmcppgfo";
 const LEGACY_EXTENSION_IDS = [

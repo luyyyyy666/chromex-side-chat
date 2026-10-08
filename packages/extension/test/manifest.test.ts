@@ -100,7 +100,7 @@ describe("extension manifest", () => {
     expect(manifest.icons?.["128"]).toBe("icons/codex-128.png");
     expect(manifest.action?.default_title).toBe("__MSG_actionOpenSidePanel__");
     expect(manifest.action?.default_icon?.["32"]).toBe("icons/codex-32.png");
-    expect(manifest.key).toBe("MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAuP+A4d/pFvVoYH/4yByEMq1JknmBMcsBo5hbyjFDRthp9GrAWTnksc0X/dP5kftZ45O+IlfP6rfg5w7ktNDt7tuJ0TpslnQEUvzC9D0CkEWzj6OmuWgY7nCtmnuHHItp1xJR9RsCDMNg9qFf54EiCf6eyTDrkJnn1yeIx/rIZRcbqnFjBLrVsuSz18L21/b+zQ8o+xzPWWhOYGVnuxuQvL57/MiDfSJ5zI0xgnYgMP/OXhdRTKmJeu/0pdEcrk2y1WgAE2LfI0jKjF6VIjKmDHabJRlP3/UZy6siRFHPZs2Q5Eh+Wxb0MtfiXN2r64R9p7MjGOkaw71GH+itEiAxuwIDAQAB");
+    expect(manifest.key).toBe("MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAuuUXtl+rLFyseWrln58NN7jy5WIdfxB7EYXvKkK8IVGpcum0OlDCIOIhKGu2cV3e/ffhAL+XrFXc6f21IrdkPwR0Dn4azv93dCAPoaSpyiUD+UkrMKb18mEg/UkeCTUK1YJ8Y2oNogC7QsYoTi+fPW587GlopaH5HuHet0n6xQLWMLnzSUoSFs6/kJWUIYHPaaQIGi5veuO/jRkplkb77aeZF4dtwv8nMUAayJLOyMAFu0KvxJzkBTaudbMl1XKC3C1pyuiyS0Olp8OTsljmS4UeeEFZc8cyCza41euW4aEmb9cLDbNUfvn3XfzAmwyB7uwWlYZtjJ26IS9wF6c0vQIDAQAB");
     expect(manifest.permissions ?? []).toContain("tabs");
     expect(manifest.permissions ?? []).toContain("desktopCapture");
     expect(manifest.host_permissions ?? []).toContain("<all_urls>");
@@ -131,8 +131,8 @@ describe("extension manifest", () => {
       readFileSync(resolve(publicDir, "_locales/ko/messages.json"), "utf8"),
     ) as { extensionName?: { message?: string } };
 
-    expect(englishMessages.extensionName?.message).toBe("Chromex");
-    expect(koreanMessages.extensionName?.message).toBe("Chromex");
+    expect(englishMessages.extensionName?.message).toBe("Chromex Side Chat");
+    expect(koreanMessages.extensionName?.message).toBe("Chromex Side Chat");
     for (const size of [16, 24, 32, 48, 128]) {
       expect(existsSync(resolve(publicDir, `icons/codex-${size}.png`))).toBe(true);
     }

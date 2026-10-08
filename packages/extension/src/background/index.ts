@@ -1,3 +1,4 @@
+import { createSideChatRoute } from "../side-chat/route.js";
 import {
   DEFAULT_HARNESS_PERMISSIONS,
   type CodexActiveTurn,
@@ -1974,6 +1975,7 @@ async function planAgenticRouteForPayload(
   routeInput: AgenticRouteInput,
 ): Promise<AgenticRoutePlan> {
   const input = routeInput;
+  if (payload.sideChatOnly) return createSideChatRoute(input);
   try {
     const plan = await bridge.request<unknown>("route.plan", { ...input });
     const normalized = normalizeAgenticRoutePlan(plan, input);

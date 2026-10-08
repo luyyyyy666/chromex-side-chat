@@ -1,3 +1,13 @@
+# Chromex Side Chat Privacy Addendum
+
+Effective date: October 8, 2026
+
+Side Chat reads loaded webpage text or an explicit selection when you use its context controls or selection context menu. The preview is editable. Each snapshot is limited to 48,000 characters and stored locally in extension storage, with up to 50 snapshots retained. Sending a question passes the reviewed snapshot through the local native bridge to Codex and its configured model service. Refresh is manual. Clearing a snapshot stops attaching it to future messages; it does not erase already submitted Codex history. Uninstalling the extension removes its local extension storage.
+
+The Side Chat question path skips automatic page collection and browser-action routing. Other inherited ChromeX features are described in the original policy below. This repository is independently maintained and is not the upstream ChromeX Web Store listing.
+
+---
+
 # Chromex Privacy Policy
 
 Effective date: April 28, 2026

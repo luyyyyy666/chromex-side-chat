@@ -129,7 +129,7 @@ describe("voice input and live action rendering", () => {
     expect(sendPromptBody).toContain("text: displayMessage || message");
     expect(sendPromptBody).toContain("const goalCommand = parseGoalCommand(message)");
     expect(sendPromptBody).toContain("const runtimeMessage = goalCommand?.objective ?? message");
-    expect(sendPromptBody).toContain("message: runtimeMessage");
+    expect(sendPromptBody).toContain("snapshotPrompt(sideChatSnapshot)");
     expect(sendPromptBody).not.toContain("text: runtimeMessage");
     expect(sidepanelSource).not.toContain("transcribeAudioFileAttachmentsForPrompt");
     expect(sidepanelSource).not.toContain("transcribeAudioFileAttachment");

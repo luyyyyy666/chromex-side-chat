@@ -18,7 +18,7 @@ type PendingBridgeRequest = {
 
 import { toFriendlyNativeHostErrorMessage } from "./native-host-errors.js";
 
-const NATIVE_HOST_NAME = "com.codex.sidepanel.bridge";
+const NATIVE_HOST_NAME = "com.chromex.sidechat.bridge";
 
 export class NativeBridgeClient {
   #port: chrome.runtime.Port | null = null;

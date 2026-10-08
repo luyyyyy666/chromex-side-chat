@@ -287,7 +287,7 @@ describe("realtime interpreter mode", () => {
     expect(sourceOnlyHintBody).toContain("Original:");
     expect(sendPromptBody).toContain("const transcriptQuestionContextActiveAtSubmit = isTranscriptQuestionContextActive()");
     expect(sendPromptBody).toContain("resolveActiveTranscriptViewForPrompt()");
-    expect(sendPromptBody).toContain("suppressPageContext: transcriptQuestionContextActive || isCurrentTabContextDismissed()");
+    expect(sendPromptBody).toContain("suppressPageContext: true");
     expect(sendPromptBody).toContain("selectedTabIds: state.selectedTabIds");
     expect(sendPromptBody).toContain("conversationContext: contextHint");
   });

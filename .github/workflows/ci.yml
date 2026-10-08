@@ -57,3 +57,8 @@ jobs:
           BROWSER_EXECUTABLE_PATH: ${{ steps.setup-chrome.outputs.chrome-path }}
           SMOKE_INSTALL_BROWSER: "0"
         run: npm run smoke
+
+      - name: Side Chat browser smoke test
+        run: |
+          npm run smoke:install-browser
+          npm run smoke:side-chat
