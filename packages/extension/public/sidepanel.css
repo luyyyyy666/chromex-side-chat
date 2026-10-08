@@ -12440,4 +12440,8 @@ body { display: flex; flex-direction: column; }
 #side-chat-context textarea { display: block; width: 100%; box-sizing: border-box; margin-top: 6px; resize: vertical; color: var(--text); background: var(--bg); border: 1px solid var(--line); border-radius: 6px; padding: 8px; }
 #side-chat-context p { overflow-wrap: anywhere; margin: 8px 0; }
 #app > .shell { height: 100%; min-height: 0; }
-#app .composer-shell { max-height: 50%; overflow-y: auto; }
+@media (max-height: 560px) {
+  #app .composer-shell { max-height: 50%; overflow-y: auto; }
+  #app .composer-shell:has(.tab-mention-popover),
+  #app .composer-shell:has(.suggestions) { overflow: visible; }
+}
